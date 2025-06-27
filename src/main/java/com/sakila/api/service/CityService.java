@@ -22,6 +22,11 @@ public class CityService {
 		this.countryRepository = countryRepository;
 	}
 	
+	// 전체 조회
+	public List<CityEntity> findAll() {
+		return cityRepository.findAll();
+	}
+	
 	// 입력
 	public void save(CityDto cityDto) {
 		// DTO -> Entity
@@ -35,7 +40,26 @@ public class CityService {
 		cityRepository.save(saveCityEntity);
 	}
 	
-	public List<CityEntity> findAll() {
-		return cityRepository.findAll();
+	// city 수정
+	public void update(CityDto cityDto) {
+		CityEntity updateCityEntity = cityRepository.findById(cityDto.getCityId()).orElse(null);
+		
+		if(updateCityEntity != null) {
+	        updateCityEntity.setCity(cityDto.getCity());
+
+	        CountryEntity countryEntity = countryRepository.findById(cityDto.getCountryId()).orElse(null);
+	        if(countryEntity != null) {
+	            updateCityEntity.setCountryEntity(countryEntity);
+	        }
+	    }
+	}
+	
+	// city 삭제
+	public boolean delete(int cityId) {
+		if(cityRepository.existsById(cityId)) {
+			cityRepository.deleteById(cityId);
+			return true;
+		}
+		return false;
 	}
 }
