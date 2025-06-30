@@ -27,6 +27,11 @@ public class CityService {
 		return cityRepository.findAll();
 	}
 	
+	// 한 행 조회
+	public CityEntity findById(int cityId) {
+		return cityRepository.findById(cityId).orElse(null);
+	}
+	
 	// 입력
 	public void save(CityDto cityDto) {
 		// DTO -> Entity

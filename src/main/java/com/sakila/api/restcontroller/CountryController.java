@@ -25,10 +25,16 @@ public class CountryController {
 		this.countryService = countryService;
 	}
 	
-	// 조회
+	// 전체 조회
 	@GetMapping("/country")
 	public ResponseEntity<List<CountryEntity>> country() {
 		return new ResponseEntity<List<CountryEntity>>(countryService.findAll(), HttpStatus.OK); 
+	}
+	
+	// 한 행 조회
+	@GetMapping("/country/{countryId}")
+	public ResponseEntity<CountryEntity> countryOne(@PathVariable int countryId) {
+		return new ResponseEntity<CountryEntity>(countryService.findById(countryId), HttpStatus.OK);
 	}
 	
 	// 입력

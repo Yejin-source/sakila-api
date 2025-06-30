@@ -24,10 +24,16 @@ public class AddressController {
 		this.addressService = addressService;
 	}
 	
-	// 조회
+	// 전체 조회
 	@GetMapping("/address")
 	public ResponseEntity<List<AddressEntity>> address() {
 		return new ResponseEntity<List<AddressEntity>>(addressService.findAll(), HttpStatus.OK);
+	}
+	
+	// 한 행 조회
+	@GetMapping("/address/{addressId}")
+	public ResponseEntity<AddressEntity> addressOne(@PathVariable int addressId) {
+		return new ResponseEntity<AddressEntity>(addressService.findById(addressId), HttpStatus.OK);
 	}
 	
 	// 입력
