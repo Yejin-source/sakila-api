@@ -1,14 +1,15 @@
 package com.sakila.api.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sakila.api.dto.CustomerDto;
 import com.sakila.api.dto.StoreDto;
 import com.sakila.api.entity.AddressEntity;
 import com.sakila.api.entity.StoreEntity;
+import com.sakila.api.entity.StoreMapping;
 import com.sakila.api.repository.AddressRepository;
 import com.sakila.api.repository.StoreRepository;
 
@@ -25,8 +26,13 @@ public class StoreService {
 	}
 	
 	// 전체 조회
-	public List<StoreEntity> findAll() {
-		return storeRepository.findAll();
+	public Page<StoreMapping> findAllBy(int currentPage) {
+		int pageSize = 10;
+		int pageNumber = currentPage - 1;
+		Sort sort = Sort.by("storeId").ascending();
+		
+		PageRequest pageable = PageRequest.of(pageNumber, pageSize, sort);
+		return storeRepository.findAllBy(pageable);
 	}
 
 	// 한 행 조회

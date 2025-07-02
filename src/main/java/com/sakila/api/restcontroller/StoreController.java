@@ -1,9 +1,9 @@
 package com.sakila.api.restcontroller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sakila.api.dto.StoreDto;
 import com.sakila.api.entity.StoreEntity;
+import com.sakila.api.entity.StoreMapping;
 import com.sakila.api.service.StoreService;
 
 @RestController
+@CrossOrigin
 public class StoreController {
 	private StoreService storeService;
 	
@@ -25,13 +27,13 @@ public class StoreController {
 	}
 	
 	// 전체 조회
-	@GetMapping("/store")
-	public ResponseEntity<List<StoreEntity>> store() {
-		return new ResponseEntity<List<StoreEntity>>(storeService.findAll(), HttpStatus.OK);
+	@GetMapping("/storeList/{currentPage}")
+	public ResponseEntity<Page<StoreMapping>> store(@PathVariable int currentPage) {
+		return new ResponseEntity<Page<StoreMapping>>(storeService.findAllBy(currentPage), HttpStatus.OK);
 	}
 	
 	// 한 행 조회
-	@GetMapping("/store/{storeId}")
+	@GetMapping("/storeOne/{storeId}")
 	public ResponseEntity<StoreEntity> storeOne(@PathVariable int storeId) {
 		return new ResponseEntity<StoreEntity>(storeService.findById(storeId), HttpStatus.OK);
 	}
