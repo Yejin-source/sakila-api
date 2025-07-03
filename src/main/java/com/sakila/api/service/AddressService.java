@@ -28,7 +28,7 @@ public class AddressService {
 	public Page<AddressMapping> findAllBy(int currentPage) {
 		int pageSize = 10;
 		int pageNumber = currentPage - 1;
-		Sort sort = Sort.by("addressId").ascending();
+		Sort sort = Sort.by("addressId").descending();
 		
 		PageRequest pageable = PageRequest.of(pageNumber, pageSize, sort);
 		return addressRepository.findAllBy(pageable);

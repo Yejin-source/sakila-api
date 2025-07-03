@@ -28,7 +28,7 @@ public class CityService {
 	public Page<CityMapping> findAllBy(int currentPage) {
 		int pageSize = 10;
 		int pageNumber = currentPage - 1;
-		Sort sort = Sort.by("cityId").ascending();
+		Sort sort = Sort.by("cityId").descending();
 		
 		PageRequest pageable = PageRequest.of(pageNumber, pageSize, sort);
 		return cityRepository.findAllBy(pageable);
